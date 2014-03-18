@@ -39,6 +39,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.restlet.Application;
 import org.restlet.Context;
 
 /**
@@ -74,12 +75,12 @@ public class PushRouter extends BaseRouter {
 	 * @param context			Restlet application context.
 	 * @param defaultResource	The resource to attach to "/".
 	 */
-	public PushRouter(Context context, Class<SubscriberResource> defaultResource) {
+	public PushRouter(Context context, Class<SubscriberResource> defaultResource, Application application) {
 		super(context);
-		if (getApplication() instanceof PushApplication) {
+		if (application instanceof PushApplication) {
 			attach("/", defaultResource);
 			attach("/callback", CallbackResource.class);
-			sendSubscriptionRequest();
+			sendSubscriptionRequest(application);
 		} else throw new RuntimeException(
 			"Restlet application does not implements the PushApplication interface");
 	}
@@ -91,8 +92,8 @@ public class PushRouter extends BaseRouter {
 	 * obtained from the {@link PushInfo} instance retrieved from the
 	 * {@link PushApplication#getPushInfo()} method of the Restlet application using this router.
 	 */
-	public void sendSubscriptionRequest() {
-		PushInfo pushInfo = ((PushApplication)getApplication()).getPushInfo();
+	public void sendSubscriptionRequest(Application application) {
+		PushInfo pushInfo = ((PushApplication)application).getPushInfo();
 		
 		try {
 			List<NameValuePair> params = new Vector<NameValuePair>();
