@@ -52,7 +52,7 @@ public final class Defaults {
 	public static final String AGENT = "UbiSOA-Framework/1.1.0";
 	
 	/** Wherever to use local files or the ones at <code>http://api.ubisoa.net/</code>. */
-	public static final Boolean USE_LOCAL_FILES = false;
+	public static final Boolean USE_LOCAL_FILES = true;
 	
 	/** Maximum client connections allowed at the same time. */
 	public static final String MAX_CONNECTIONS = "1024";

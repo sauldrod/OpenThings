@@ -56,6 +56,8 @@ public class FileResource extends ServerResource {
 			mediaType = MediaType.IMAGE_GIF;
 		else if (ext.compareTo("css") == 0)
 			mediaType = MediaType.TEXT_CSS;
+		else if (ext.compareTo("rdf") == 0)
+			mediaType = MediaType.APPLICATION_RDF_XML;
 		else if (ext.compareTo("js") == 0)
 			mediaType = MediaType.TEXT_JAVASCRIPT;
 				
