@@ -49,7 +49,7 @@ import org.restlet.resource.ServerResource;
 public final class Defaults {
 	
 	/** The default content of the <code>Server</code> response header. */
-	public static final String AGENT = "UbiSOA-Framework/1.1.0";
+	public static final String AGENT = "UbiSOA-Framework/1.2.0";
 	
 	/** Wherever to use local files or the ones at <code>http://api.ubisoa.net/</code>. */
 	public static final Boolean USE_LOCAL_FILES = true;
@@ -59,8 +59,10 @@ public final class Defaults {
 	
 	/** Maximum processing threads allowed at the same time. */
 	public static final String MAX_THREADS = "512";
+	
+	public static final String WELL_KNOWN = "/.well-known/description" ;
 
-	/**
+	/**º
 	 * Sets the <code>Server</code> response header of the specified {@link ServerResource} instance.
 	 * 
 	 * @param serverResource The resource instance where the header will be set.

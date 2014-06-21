@@ -66,9 +66,10 @@ public class BaseResource extends ServerResource {
 	protected void doInit() throws ResourceException {
 		
 		// Sets the Accept request header, accordingly to the output query parameter.
+		// Makes the switch only for the GET method.
 		List<Preference<MediaType>> accept = new Vector<Preference<MediaType>>();
 		Parameter output = getQuery().getFirst("output");
-		if (output != null) {
+		if (output != null && getMethod() == Method.GET) {
 			String outputChoice = output.getValue();
 			if (outputChoice.compareTo("html") == 0)
 				accept.add(new Preference<MediaType>(MediaType.TEXT_HTML));
@@ -83,12 +84,9 @@ public class BaseResource extends ServerResource {
 			else if (outputChoice.compareTo("png") == 0)
 				accept.add(new Preference<MediaType>(MediaType.IMAGE_PNG));
 			else setStatus(Status.CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE);
-		} else accept.add(new Preference<MediaType>(MediaType.TEXT_HTML));
-		
-		// Makes the switch only for the GET method.
-		if (getMethod() == Method.GET)
 			getRequest().getClientInfo().setAcceptedMediaTypes(accept);
-		
+		}
+			
 		// Sets the server Agent of the response.
 		Defaults.setServerInfo(this);
 	}
