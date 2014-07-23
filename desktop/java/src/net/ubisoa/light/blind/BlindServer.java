@@ -1,18 +1,12 @@
 package net.ubisoa.light.blind;
 
 import net.ubisoa.common.BaseRouter;
-import net.ubisoa.common.CoolRedirector;
 import net.ubisoa.core.Defaults;
 import net.ubisoa.discovery.DiscoveryCore;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
-import org.restlet.Component;
-import org.restlet.Request;
 import org.restlet.Restlet;
-import org.restlet.Server;
-import org.restlet.data.Form;
-import org.restlet.data.Protocol;
 import org.restlet.routing.Extractor;
 import org.restlet.routing.Redirector;
 import org.restlet.routing.Router;
@@ -24,6 +18,8 @@ public class BlindServer extends Application {
 	private static AdvancedServoPhidget phidget;
 	private HttpClient client = Defaults.getHttpClient();
 	
+	
+	//Set interface configuration
 	private static boolean connectPhidget() {
 		try {
 			phidget = new AdvancedServoPhidget();
@@ -42,42 +38,35 @@ public class BlindServer extends Application {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {	
-		if (!connectPhidget()) {
-			System.out.println("Cannot start Phidget.");
-			return;
-		}
-		
-		Component component = new Component();
-		Server server = new Server(Protocol.HTTP, 8300);
-		component.getServers().add(server);
-		server.getContext().getParameters().set("maxTotalConnections", Defaults.MAX_CONNECTIONS);
-		server.getContext().getParameters().set("maxThreads", Defaults.MAX_THREADS);
-		component.getDefaultHost().attach(new BlindServer());
-		component.start();
-		DiscoveryCore.registerService("Blind", "/description/?output=rdf", "RDF/N3", 8300);
-	}
-	
 	@Override
 	public Restlet createInboundRoot() {
+		
+		//Start interface
+		if (!connectPhidget()) {
+			System.out.println("Cannot start Phidget.");
+		}
+		
+		//Set resource routes
 		Router router = new BaseRouter(getContext());
 		router.attach(Defaults.WELL_KNOWN, BlindDescription.class);
-		router.attach("/", BlindResource.class);
+		router.attach("/data", BlindResource.class);
 		
+		//Set cool redirect
 		String target = "/data";
-		Redirector redirector = new CoolRedirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
-
-		// Attach the extractor to the router
-		router.attach("/data", redirector);
+		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
+		router.attach("/", redirector);
 		
-		
+		//Register service on dns-sd
+		DiscoveryCore.registerService("Blind", Defaults.WELL_KNOWN, 80);		
 		return router;
 	}
 	
+	//Interface to attach interface to resource
 	public AdvancedServoPhidget getPhidget() {
 		return phidget;
 	}
-	
+
+	//Interface to attach client to resource
 	public HttpClient getClient() {
 		return client;
 	}

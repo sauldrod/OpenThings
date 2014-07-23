@@ -60,7 +60,7 @@ public final class Defaults {
 	/** Maximum processing threads allowed at the same time. */
 	public static final String MAX_THREADS = "512";
 	
-	public static final String WELL_KNOWN = "/.well-known/description" ;
+	public static final String WELL_KNOWN = "/.well-known" ;
 
 	/**º
 	 * Sets the <code>Server</code> response header of the specified {@link ServerResource} instance.

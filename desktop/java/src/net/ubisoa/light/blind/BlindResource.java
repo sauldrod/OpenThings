@@ -112,8 +112,6 @@ public class BlindResource extends BaseResource{
 		return atomConverter.toRepresentation(feed, new Variant(MediaType.APPLICATION_ATOM), this);
 	}
 	
-	
-	
 	@Get("json")
 	public JsonRepresentation semaphoreJson() throws PhidgetException {
 		String padding = getQuery().getFirstValue("callback");
@@ -134,28 +132,14 @@ public class BlindResource extends BaseResource{
 	}
 	
 	@Get("rdf")
-	public Representation servoRdf() throws PhidgetException{
-		String ssn = "http://purl.oclc.org/NET/ssnx/ssn#";
-		String spt = "http://spitfire-project.eu/ontology/ns/";
+	public StringRepresentation servoRDF() throws PhidgetException {
+		double minimum = phidget.getPositionMin(0);
+		double current = phidget.getPosition(0);
+		double maximum = phidget.getPositionMax(0);
+				
+		String rdf = "holo";
 		
-		String root = getRequest().getRootRef().toString();
-		
-		
-		Reference servoRef = new Reference(root);
-		Reference actuator = new Reference(spt + "Actuator"); 
-		Reference maxValue = new Reference(spt + "maxValue");
-		Reference minValue = new Reference(spt + "minValue");
-		Reference value = new Reference(spt + "Value");		
-		
-		Graph servoGraph = new Graph();
-		servoGraph.add(servoRef, "a", actuator);
-		servoGraph.add(servoRef, maxValue, new Literal(Double.toString(phidget.getPositionMax(0))));
-		servoGraph.add(servoRef, minValue, new Literal(Double.toString(phidget.getPositionMin(0))));
-		servoGraph.add(servoRef, value, new Literal(Double.toString(phidget.getCurrent(0))));
-		
-		return servoGraph.getRdfTurtleRepresentation();
-		
-		
+		return new StringRepresentation(rdf, MediaType.APPLICATION_RDF_XML);
 	}
 	
 	@Post("form")

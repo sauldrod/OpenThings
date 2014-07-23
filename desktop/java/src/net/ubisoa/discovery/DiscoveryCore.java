@@ -55,11 +55,10 @@ public class DiscoveryCore {
 		}
 	}
 	
-	public static void registerService(String name, String path, String type, int port) {
+	public static void registerService(String name, String path, int port) {
 		TXTRecord txtRecord = new TXTRecord();
 		txtRecord.set("txtvers", discoveryVersionNumber);
-		txtRecord.set("path", path);
-		txtRecord.set("type",type);
+		txtRecord.set("semantics", path);
 		
 		try {
 			DNSSD.register(0, DNSSD.ALL_INTERFACES, name, "_ubisoa._tcp", null,
