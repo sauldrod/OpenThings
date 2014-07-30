@@ -26,19 +26,9 @@
  */
 package net.ubisoa.light.push;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Vector;
-
 import net.ubisoa.common.BaseRouter;
-import net.ubisoa.core.Defaults;
 import net.ubisoa.push.test.SubscriberResource;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
+
 import org.restlet.Application;
 import org.restlet.Context;
 

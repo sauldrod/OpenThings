@@ -15,36 +15,10 @@ import com.phidgets.AdvancedServoPhidget;
 import com.phidgets.PhidgetException;
 
 public class ContextServer extends Application {
-	private static AdvancedServoPhidget phidget;
 	private HttpClient client = Defaults.getHttpClient();
-	
-	
-	//Set interface configuration
-	private static boolean connectPhidget() {
-		try {
-			phidget = new AdvancedServoPhidget();
-			phidget.open(177475);
-			System.out.println("waiting for Servo attachment...");
-			phidget.waitForAttachment();
-			System.out.println("Serial: " + phidget.getSerialNumber());
-			System.out.println("Servos: " + phidget.getMotorCount());			
-			phidget.setEngaged(0, true);
-		    phidget.setServoType(0,AdvancedServoPhidget.PHIDGET_SERVO_HITEC_HS422);
-			phidget.setPosition(0, 0);
-			return true;
-		} catch (PhidgetException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
 	
 	@Override
 	public Restlet createInboundRoot() {
-		
-		//Start interface
-		if (!connectPhidget()) {
-			System.out.println("Cannot start Phidget.");
-		}
 		
 		//Set resource routes
 		Router router = new BaseRouter(getContext());
@@ -52,18 +26,13 @@ public class ContextServer extends Application {
 		router.attach("/data", ContextResource.class);
 		
 		//Set cool redirect
-		String target = "/data";
+		String target = "/context/data";
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		
 		//Register service on dns-sd
-		DiscoveryCore.registerService("Blind", Defaults.WELL_KNOWN, 80);		
+		DiscoveryCore.registerService("Context", "/context", 80);		
 		return router;
-	}
-	
-	//Interface to attach interface to resource
-	public AdvancedServoPhidget getPhidget() {
-		return phidget;
 	}
 
 	//Interface to attach client to resource

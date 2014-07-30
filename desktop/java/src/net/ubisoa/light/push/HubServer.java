@@ -35,10 +35,7 @@ import net.ubisoa.core.Defaults;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
-import org.restlet.Component;
 import org.restlet.Restlet;
-import org.restlet.Server;
-import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 
 /**

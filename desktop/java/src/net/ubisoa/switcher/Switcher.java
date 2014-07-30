@@ -11,6 +11,8 @@ import net.ubisoa.light.rfid.RFIDServer;
 import org.restlet.Component;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
+//Class to start multiple services on the same port and path, multple instances of this module can be run
+//on different ports or different devices to provide a distributed topology
 
 public class Switcher {
 
@@ -23,13 +25,16 @@ public class Switcher {
 		server.getContext().getParameters().set("maxTotalConnections", Defaults.MAX_CONNECTIONS);
 		server.getContext().getParameters().set("maxThreads", Defaults.MAX_THREADS);
 		
+		//Virtual services selection
 		component.getDefaultHost().attach("", new HubServer());
+		component.getDefaultHost().attach("/context", new ContextServer());
+		
+		//Device services selection
 		component.getDefaultHost().attach("/rfid", new RFIDServer());
 		component.getDefaultHost().attach("/control", new LightControlServer());
 		component.getDefaultHost().attach("/blind", new BlindServer());
 		component.getDefaultHost().attach("/lamp", new LampServer());
-//		component.getDefaultHost().attach("/context", new ContextServer());
-		
+
 		//Start the server
 		component.start();
 	}
