@@ -1,4 +1,4 @@
-package net.ubisoa.light.blind;
+package net.ubisoa.light.context;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -7,13 +7,12 @@ import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import net.ubisoa.common.BaseResource;
-import net.ubisoa.common.HTMLTemplate;
-
+import org.apache.http.client.HttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Reference;
 import org.restlet.data.Status;
 import org.restlet.ext.atom.AtomConverter;
 import org.restlet.ext.atom.Content;
@@ -21,6 +20,8 @@ import org.restlet.ext.atom.Entry;
 import org.restlet.ext.atom.Feed;
 import org.restlet.ext.atom.Text;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.ext.rdf.Graph;
+import org.restlet.ext.rdf.Literal;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
@@ -33,8 +34,11 @@ import org.w3c.dom.Element;
 import com.phidgets.AdvancedServoPhidget;
 import com.phidgets.PhidgetException;
 
-public class BlindResource extends BaseResource{
-	private AdvancedServoPhidget phidget = ((BlindServer)getApplication()).getPhidget();
+import net.ubisoa.common.BaseResource;
+import net.ubisoa.common.HTMLTemplate;
+
+public class ContextResource extends BaseResource{
+	private AdvancedServoPhidget phidget = ((ContextServer)getApplication()).getPhidget();
 	
 	@Get("html")
 	public StringRepresentation servoMotor() throws PhidgetException {
@@ -167,10 +171,10 @@ public class BlindResource extends BaseResource{
 			phidget.setPosition(0, value);
 			
 			setStatus(Status.REDIRECTION_PERMANENT);
-			setLocationRef("/blind/data?t=" + (new Date()).getTime());
+			setLocationRef("/?t=" + (new Date()).getTime());
 		} catch (PhidgetException e) {
 			setStatus(Status.SERVER_ERROR_SERVICE_UNAVAILABLE);
-			setLocationRef("/blind/data?t=" + (new Date()).getTime());
+			setLocationRef("/?t=" + (new Date()).getTime());
 		}
 	}
 	
