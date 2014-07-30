@@ -26,6 +26,8 @@
  */
 package net.ubisoa.light.control;
 
+import java.util.UUID;
+
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
 import net.ubisoa.discovery.DiscoveryCore;
@@ -41,9 +43,13 @@ import org.restlet.routing.Router;
 /**
  * @author Edgardo Avilés-López <edgardo@ubisoa.net>
  */
-public class LightControl extends Application implements PushApplication {
+public class LightControlServer extends Application implements PushApplication {
 	// TODO: Add documentation.
 	private HttpClient client = Defaults.getHttpClient();
+	
+	private final PushInfo pushInfo = new PushInfo(
+			"http://127.0.0.1/", "http://127.0.0.1/rfid/data?output=json",
+			"http://127.0.0.1/control/callback", UUID.randomUUID().toString());
 
 	@Override
 	public Restlet createInboundRoot() {
@@ -53,7 +59,7 @@ public class LightControl extends Application implements PushApplication {
 		
 		Router router = new BaseRouter(getContext());
 		router.attach("/", LightControlResource.class);
-		router.attach("/callback", CallbackResource.class);
+		router.attach("/callback", LightControlCallback.class);
 		return router;
 	}
 
@@ -70,7 +76,6 @@ public class LightControl extends Application implements PushApplication {
 
 	@Override
 	public PushInfo getPushInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return pushInfo;
 	}
 }

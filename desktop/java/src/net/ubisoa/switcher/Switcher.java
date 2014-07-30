@@ -2,7 +2,8 @@ package net.ubisoa.switcher;
 
 import net.ubisoa.core.Defaults;
 import net.ubisoa.light.blind.BlindServer;
-import net.ubisoa.light.control.LightControl;
+import net.ubisoa.light.context.ContextServer;
+import net.ubisoa.light.control.LightControlServer;
 import net.ubisoa.light.lamp.LampServer;
 import net.ubisoa.light.push.HubServer;
 import net.ubisoa.light.rfid.RFIDServer;
@@ -24,10 +25,10 @@ public class Switcher {
 		
 		component.getDefaultHost().attach("", new HubServer());
 		component.getDefaultHost().attach("/rfid", new RFIDServer());
-		component.getDefaultHost().attach("/control", new LightControl());
+		component.getDefaultHost().attach("/control", new LightControlServer());
 		component.getDefaultHost().attach("/blind", new BlindServer());
 		component.getDefaultHost().attach("/lamp", new LampServer());
-
+//		component.getDefaultHost().attach("/context", new ContextServer());
 		
 		//Start the server
 		component.start();

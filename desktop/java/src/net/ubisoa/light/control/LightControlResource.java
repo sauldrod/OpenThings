@@ -67,11 +67,10 @@ import com.phidgets.PhidgetException;
 public class LightControlResource extends BaseResource {
 	// TODO: Add documentation.
 	
-	private HttpClient client = ((LightControl)getApplication()).getClient();
+	private HttpClient client = ((LightControlServer)getApplication()).getClient();
+	private PushInfo pushInfo = ((LightControlServer)getApplication()).getPushInfo();
+	
 
-	private final PushInfo pushInfo = new PushInfo(
-			"http://127.0.0.1/", "http://127.0.0.1/rfid/data?output=json",
-			"http://127.0.0.1/control/callback", UUID.randomUUID().toString());
 	
 	@Get
 	public StringRepresentation items() {		
