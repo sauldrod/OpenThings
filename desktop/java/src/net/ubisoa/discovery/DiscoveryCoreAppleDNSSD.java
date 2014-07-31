@@ -33,7 +33,7 @@ import com.apple.dnssd.DNSSDService;
 import com.apple.dnssd.RegisterListener;
 import com.apple.dnssd.TXTRecord;
 
-public class DiscoveryCore {
+public class DiscoveryCoreAppleDNSSD {
 	private static String discoveryVersionNumber = "1.0.1";
 	
 	

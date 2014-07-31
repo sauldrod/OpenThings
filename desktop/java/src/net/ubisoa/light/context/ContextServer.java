@@ -1,8 +1,11 @@
 package net.ubisoa.light.context;
 
+import java.io.IOException;
+
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCore;
+import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
+import net.ubisoa.discovery.DiscoveryCoreJmDNS;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
@@ -31,7 +34,12 @@ public class ContextServer extends Application {
 		router.attach("/", redirector);
 		
 		//Register service on dns-sd
-		DiscoveryCore.registerService("Context", "/context", 80);		
+		try {
+			DiscoveryCoreJmDNS.registerService("Context", "/context", 80);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return router;
 	}
 

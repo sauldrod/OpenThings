@@ -26,12 +26,14 @@
  */
 package net.ubisoa.light.rfid;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCore;
+import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
+import net.ubisoa.discovery.DiscoveryCoreJmDNS;
 import net.ubisoa.light.blind.BlindDescription;
 
 import org.apache.http.client.HttpClient;
@@ -61,7 +63,12 @@ public class RFIDServer extends Application {
 		router.attach("/", redirector);
 		
 		//Register service on dns-sd
-		DiscoveryCore.registerService("RFID", "/rfid", 80);		
+		try {
+			DiscoveryCoreJmDNS.registerService("RFID", "/rfid", 80);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		return router;
 	}
 	

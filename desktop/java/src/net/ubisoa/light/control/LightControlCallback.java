@@ -32,6 +32,8 @@ public class LightControlCallback extends BaseResource {
 				return new StringRepresentation(challenge, MediaType.TEXT_PLAIN);
 		}
 		
+		
+		
 		return new StringRepresentation("Waiting callbacks…", MediaType.TEXT_PLAIN);
 	}
 }

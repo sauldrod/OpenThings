@@ -1,8 +1,11 @@
 package net.ubisoa.light.blind;
 
+import java.io.IOException;
+
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCore;
+import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
+import net.ubisoa.discovery.DiscoveryCoreJmDNS;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
@@ -56,7 +59,12 @@ public class BlindServer extends Application {
 		router.attach("/", redirector);
 		
 		//Register service on dns-sd
-		DiscoveryCore.registerService("Blind", "/blind", 80);		
+		try {
+			DiscoveryCoreJmDNS.registerService("Blind", "/blind", 80);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		return router;
 	}
 	

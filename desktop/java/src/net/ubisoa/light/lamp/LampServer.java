@@ -1,8 +1,11 @@
 package net.ubisoa.light.lamp;
 
+import java.io.IOException;
+
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCore;
+import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
+import net.ubisoa.discovery.DiscoveryCoreJmDNS;
 import net.ubisoa.light.blind.BlindDescription;
 import net.ubisoa.light.blind.BlindResource;
 import net.ubisoa.semaphore.SemaphoreResource;
@@ -56,7 +59,12 @@ public class LampServer extends Application {
 		router.attach("/", redirector);
 		
 		//Register service on dns-sd
-		DiscoveryCore.registerService("Lamp", "/lamp", 80);		
+		try {
+			DiscoveryCoreJmDNS.registerService("Lamp", "/lamp", 80);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return router;
 	}
 	
