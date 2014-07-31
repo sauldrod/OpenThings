@@ -31,7 +31,6 @@ import java.util.UUID;
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
 import net.ubisoa.discovery.DiscoveryCore;
-import net.ubisoa.light.push.CallbackResource;
 import net.ubisoa.light.push.PushApplication;
 import net.ubisoa.light.push.PushInfo;
 
@@ -72,7 +71,6 @@ public class LightControlServer extends Application implements PushApplication {
 	public HttpClient getClient() {
 		return client;
 	}
-
 
 	@Override
 	public PushInfo getPushInfo() {

@@ -32,8 +32,8 @@ public class Switcher {
 		//Device services selection
 		component.getDefaultHost().attach("/rfid", new RFIDServer());
 		component.getDefaultHost().attach("/control", new LightControlServer());
-		component.getDefaultHost().attach("/blind", new BlindServer());
-		component.getDefaultHost().attach("/lamp", new LampServer());
+//		component.getDefaultHost().attach("/blind", new BlindServer());
+//		component.getDefaultHost().attach("/lamp", new LampServer());
 
 		//Start the server
 		component.start();

@@ -118,7 +118,7 @@ public class LightControlResource extends BaseResource {
 			if (status.equals("start")){
 			sendSubscriptionRequest();
 			
-			}else if (status.equals("start")){
+			}else if (status.equals("stop")){
 			//TODO STOP APPLICATION	
 			
 			}
