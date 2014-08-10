@@ -32,8 +32,7 @@ import java.util.Vector;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
-import net.ubisoa.discovery.DiscoveryCoreJmDNS;
+import net.ubisoa.discovery.DiscoveryJmDNS;
 import net.ubisoa.light.blind.BlindDescription;
 
 import org.apache.http.client.HttpClient;
@@ -52,6 +51,14 @@ public class RFIDServer extends Application {
 
 	@Override
 	public Restlet createInboundRoot() {	
+		//Start Reader
+		try {
+			new Reader();
+		} catch (Exception e) {
+			System.out.println("Reader could't start");
+			e.printStackTrace();
+		}
+		
 		//Set resource routes
 		Router router = new BaseRouter(getContext());
 		router.attach(Defaults.WELL_KNOWN, BlindDescription.class);
@@ -64,7 +71,7 @@ public class RFIDServer extends Application {
 		
 		//Register service on dns-sd
 		try {
-			DiscoveryCoreJmDNS.registerService("RFID", "/rfid", 80);
+			DiscoveryJmDNS.registerService("RFID", "/rfid", 80);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

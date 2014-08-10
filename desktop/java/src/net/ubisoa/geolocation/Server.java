@@ -26,7 +26,7 @@
  */
 package net.ubisoa.geolocation;
 
-import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
+import net.ubisoa.discovery.DiscoveryBonjour;
 
 import org.restlet.Application;
 import org.restlet.Component;
@@ -41,7 +41,7 @@ public class Server extends Application {
 		component.getServers().add(Protocol.HTTP, port);
 		component.getDefaultHost().attach(new Server());
 		component.start();
-		DiscoveryCoreAppleDNSSD.registerService("Alpha Dev", "geolocation.resolver", port);
+		DiscoveryBonjour.registerService("Alpha Dev", "geolocation.resolver", port);
 	}
 	
 //	@Override

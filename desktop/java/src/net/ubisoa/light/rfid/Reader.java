@@ -32,7 +32,7 @@ public class Reader
 {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public static final void main(String args[]) throws Exception {
+	public Reader() throws PhidgetException, IOException {
 		System.out.println(Phidget.getLibraryVersion());
 
 		RFIDPhidget rfid = new RFIDPhidget();
@@ -49,6 +49,7 @@ public class Reader
 				System.out.println("Attachment: " + e);
 			}
 		});
+		
 		rfid.addDetachListener(new DetachListener() {
 			public void detached(DetachEvent e) {
 				System.out.println("Detachment: " + e);

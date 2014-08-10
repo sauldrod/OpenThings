@@ -36,4 +36,14 @@ public class LightControlCallback extends BaseResource {
 		
 		return new StringRepresentation("Waiting callbacks…", MediaType.TEXT_PLAIN);
 	}
+	
+	@Post("json")
+	public StringRepresentation jsonCallback(Representation entity) {
+	
+		System.out.println("Se recibio un ping");
+		System.out.println(getQuery().toString());
+		
+		return new StringRepresentation("Callback Recived", MediaType.TEXT_PLAIN);
+	
+	}
 }

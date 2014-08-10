@@ -7,18 +7,16 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
 
-public class DiscoveryCoreJmDNS  {
+public class DiscoveryJmDNS  {
 
-public final static String REMOTE_TYPE = "_openthings._tcp.local.";
+	public final static String REMOTE_TYPE = "_openthings._tcp.local.";
+		private static JmDNS mdnsServer;
+	
+		public DiscoveryJmDNS() throws IOException {
+			mdnsServer = JmDNS.create();
+		}
 
-	  public static void main(String[] args) throws IOException{	
-		// Start DNS Service.
-		  registerService("PRUBA2","/BLIND",80);
-		  registerService("PRUBA3","/BLIND",80);
-	  }	
-		
 		public static void registerService(String name, String path, int port) throws IOException {
-			JmDNS mdnsServer = JmDNS.create();
 			//Values for a registry
 	        final HashMap<String, String> txtRecord = new HashMap<String, String>();
 	        txtRecord.put("txtvers", "1");
@@ -29,6 +27,10 @@ public final static String REMOTE_TYPE = "_openthings._tcp.local.";
 			ServiceInfo testService = ServiceInfo.create(REMOTE_TYPE, name, 80,  0, 0, txtRecord);
 			mdnsServer.registerService(testService);
 			System.out.println("Service "+ name +" is registered.");
+		}
+
+		public static JmDNS getMdnsServer() {
+			return mdnsServer;
 		}
 
 }

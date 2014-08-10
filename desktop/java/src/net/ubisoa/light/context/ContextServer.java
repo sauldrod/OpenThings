@@ -4,18 +4,13 @@ import java.io.IOException;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
-import net.ubisoa.discovery.DiscoveryCoreJmDNS;
+import net.ubisoa.discovery.DiscoveryJmDNS;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
 import org.restlet.Restlet;
-import org.restlet.routing.Extractor;
 import org.restlet.routing.Redirector;
 import org.restlet.routing.Router;
-
-import com.phidgets.AdvancedServoPhidget;
-import com.phidgets.PhidgetException;
 
 public class ContextServer extends Application {
 	private HttpClient client = Defaults.getHttpClient();
@@ -35,7 +30,7 @@ public class ContextServer extends Application {
 		
 		//Register service on dns-sd
 		try {
-			DiscoveryCoreJmDNS.registerService("Context", "/context", 80);
+			DiscoveryJmDNS.registerService("Context", "/context", 80);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

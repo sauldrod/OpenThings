@@ -4,8 +4,7 @@ import java.io.IOException;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
-import net.ubisoa.discovery.DiscoveryCoreJmDNS;
+import net.ubisoa.discovery.DiscoveryJmDNS;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
@@ -60,7 +59,7 @@ public class BlindServer extends Application {
 		
 		//Register service on dns-sd
 		try {
-			DiscoveryCoreJmDNS.registerService("Blind", "/blind", 80);
+			DiscoveryJmDNS.registerService("Blind", "/blind", 80);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

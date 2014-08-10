@@ -1,43 +1,43 @@
 package net.ubisoa.light.control;
 
-import com.apple.dnssd.BrowseListener;
-import com.apple.dnssd.DNSSD;
-import com.apple.dnssd.DNSSDException;
-import com.apple.dnssd.DNSSDService;
-//WORK ON PROGRESS, DNS BROWSER
-public class LightControlApplication implements BrowseListener {
+import java.io.IOException;
+import java.net.InetAddress;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
 
-	  public static void main(String[] args) throws DNSSDException, InterruptedException  {
-	    System.out.println("TestBrowse Starting");
-	    DNSSDService b = DNSSD.browse("_example._tcp", (LightControlApplication));
-	    System.out.println("TestBrowse Running");
-	    Thread.sleep(30000);
-	    System.out.println("TestBrowse Stopping");
-	    b.stop(  );
-	    }
-	
-	// Display error message on failure
-		  public void operationFailed(DNSSDService service, int errorCode)
-		    {
-		    System.out.println("Browse failed " + errorCode);
-		    System.exit(-1);
-		    }
+import net.ubisoa.discovery.DiscoveryJmDNS;
 
-		  // Display services we discover
-		  public void serviceFound(DNSSDService browser, int flags, int ifIndex,
-		            String name, String regType, String domain)
-		    {
-		    System.out.println("Add flags:" + flags + ", ifIndex:" + ifIndex +
-		      ", Name:" + name + ", Type:" + regType + ", Domain:" + domain);
-		    }
+public class LightControlApplication{
 
-		  // Print a line when services go away
-		  public void serviceLost(DNSSDService browser, int flags, int ifIndex,
-		            String name, String regType, String domain)
-		    {
-		    System.out.println("Rmv flags:" + flags + ", ifIndex:" + ifIndex +
-		      ", Name:" + name + ", Type:" + regType + ", Domain:" + domain);
-		    }
-
+    /**
+     * @param args
+     *            the command line arguments
+     * @throws IOException 
+     */
+    public static void main(String[] args) throws IOException {
+        /* Activate these lines to see log messages of JmDNS */
+        JmDNS jmdns = JmDNS.create();
+        try {
+                ServiceInfo[] infos = jmdns.list("_openthings._tcp.local.");
+                System.out.println("List _openthings._tcp.local.");
+                for (int i = 0; i < infos.length; i++) {
+                	InetAddress[] address = infos[i].getInetAddresses();
+                    System.out.println(infos[i].getName());
+                    System.out.println(infos[i].getServer());
+                    System.out.println(infos[i].getPort());
+                    System.out.println(infos[i].getNiceTextString());
+                    for (int j = 0; j < address.length; j++) {
+                    	System.out.println(address[j]);
+                    }
+                }
+                System.out.println();
+        } finally {
+            if (jmdns != null) try {
+                jmdns.close();
+            } catch (IOException exception) {
+                //
+            }
+        }
+    }
 }

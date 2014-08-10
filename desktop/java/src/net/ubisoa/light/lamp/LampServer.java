@@ -4,23 +4,13 @@ import java.io.IOException;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
-import net.ubisoa.discovery.DiscoveryCoreAppleDNSSD;
-import net.ubisoa.discovery.DiscoveryCoreJmDNS;
-import net.ubisoa.light.blind.BlindDescription;
-import net.ubisoa.light.blind.BlindResource;
-import net.ubisoa.semaphore.SemaphoreResource;
-import net.ubisoa.semaphore.SemaphoreServer;
+import net.ubisoa.discovery.DiscoveryJmDNS;
 
-import org.apache.http.client.HttpClient;
 import org.restlet.Application;
-import org.restlet.Component;
 import org.restlet.Restlet;
-import org.restlet.Server;
-import org.restlet.data.Protocol;
 import org.restlet.routing.Redirector;
 import org.restlet.routing.Router;
 
-import com.phidgets.AdvancedServoPhidget;
 import com.phidgets.InterfaceKitPhidget;
 import com.phidgets.PhidgetException;
 
@@ -60,7 +50,7 @@ public class LampServer extends Application {
 		
 		//Register service on dns-sd
 		try {
-			DiscoveryCoreJmDNS.registerService("Lamp", "/lamp", 80);
+			DiscoveryJmDNS.registerService("Lamp", "/lamp", 80);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
