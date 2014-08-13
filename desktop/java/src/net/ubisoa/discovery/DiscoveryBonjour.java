@@ -61,7 +61,7 @@ public class DiscoveryBonjour {
 		txtRecord.set("path", path);
 		
 		try {
-			DNSSD.register(0, DNSSD.ALL_INTERFACES, name, "_ubisoa._tcp", null,
+			DNSSD.register(0, DNSSD.ALL_INTERFACES, name, "_openthings._tcp", null,
 					null, port, txtRecord, new RegisterListener() {
 
 				public void serviceRegistered(DNSSDRegistration registration, int flags,

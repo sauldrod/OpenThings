@@ -31,6 +31,7 @@ import java.util.UUID;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
+import net.ubisoa.discovery.DiscoveryBonjour;
 import net.ubisoa.discovery.DiscoveryJmDNS;
 import net.ubisoa.light.push.PushApplication;
 import net.ubisoa.light.push.PushInfo;
@@ -54,13 +55,7 @@ public class LightControlServer extends Application implements PushApplication {
 	@Override
 	public Restlet createInboundRoot() {
 		
-		//Register service on dns-sd
-		try {
-			DiscoveryJmDNS.registerService("LightControl", "/control", 80);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		DiscoveryBonjour.registerService("LightControl", "/control", 80);		
 		
 		Router router = new BaseRouter(getContext());
 		router.attach("/", LightControlResource.class);

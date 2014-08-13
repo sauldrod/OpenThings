@@ -32,6 +32,7 @@ import java.util.Vector;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
+import net.ubisoa.discovery.DiscoveryBonjour;
 import net.ubisoa.discovery.DiscoveryJmDNS;
 import net.ubisoa.light.blind.BlindDescription;
 
@@ -52,12 +53,8 @@ public class RFIDServer extends Application {
 	@Override
 	public Restlet createInboundRoot() {	
 		//Start Reader
-		try {
-			new Reader();
-		} catch (Exception e) {
-			System.out.println("Reader could't start");
-			e.printStackTrace();
-		}
+		Reader reader = new Reader();
+	    reader.start();
 		
 		//Set resource routes
 		Router router = new BaseRouter(getContext());
@@ -69,13 +66,7 @@ public class RFIDServer extends Application {
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		
-		//Register service on dns-sd
-		try {
-			DiscoveryJmDNS.registerService("RFID", "/rfid", 80);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		DiscoveryBonjour.registerService("RFID", "/rfid", 80);	
 		return router;
 	}
 	

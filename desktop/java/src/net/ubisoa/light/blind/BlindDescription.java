@@ -25,6 +25,8 @@ public class BlindDescription  extends BaseResource{
 "    <rdf:type rdf:resource=\"http://purl.oclc.org/NET/ssnx/ssn#Device\"/>"+
 "    <rdfs:label>Window Blind Description</rdfs:label>"+
 "    <spt:actuate rdf:resource=\"http://dbpedia.org/resource/Window_blind\"/>"+
+"    <ssn:featureOfInterest rdf:resource=\"http://spitfire-project.eu/ontology/ns/Light\"/>"+
+"    <ssn:hasQuality rdf:resource=\"http://spitfire-project.eu/ontology/ns/actuate\"/>"+
 
 // Interface Description
 

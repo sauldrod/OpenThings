@@ -8,7 +8,6 @@ import net.ubisoa.light.control.LightControlServer;
 import net.ubisoa.light.lamp.LampServer;
 import net.ubisoa.light.push.HubServer;
 import net.ubisoa.light.rfid.RFIDServer;
-import net.ubisoa.light.rfid.Reader;
 
 import org.restlet.Component;
 import org.restlet.Server;
@@ -32,13 +31,13 @@ public class Switcher {
 		
 		//Virtual services selection
 		component.getDefaultHost().attach("", new HubServer());
-		component.getDefaultHost().attach("/context", new ContextServer());
+//		component.getDefaultHost().attach("/context", new ContextServer());
 		
 		//Device services selection
 //		component.getDefaultHost().attach("/rfid", new RFIDServer());
-		component.getDefaultHost().attach("/control", new LightControlServer());
+//		component.getDefaultHost().attach("/control", new LightControlServer());
 		component.getDefaultHost().attach("/blind", new BlindServer());
-		component.getDefaultHost().attach("/lamp", new LampServer());
+//		component.getDefaultHost().attach("/lamp", new LampServer());
 
 		//Start the server
 		component.start();

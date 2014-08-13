@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.Vector;
 
 import net.ubisoa.common.BaseResource;
@@ -58,8 +57,6 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-
-import com.phidgets.PhidgetException;
 
 /**
  * @author Edgardo Avilés-López <edgardo@ubisoa.net>

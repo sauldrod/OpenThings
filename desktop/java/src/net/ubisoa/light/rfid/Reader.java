@@ -28,14 +28,16 @@ import com.phidgets.event.TagGainListener;
 import com.phidgets.event.TagLossEvent;
 import com.phidgets.event.TagLossListener;
 
-public class Reader
+public class Reader extends Thread
 {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public Reader() throws PhidgetException, IOException {
+	public void run() {
 		System.out.println(Phidget.getLibraryVersion());
 
-		RFIDPhidget rfid = new RFIDPhidget();
+		RFIDPhidget rfid;
+		try {
+			rfid = new RFIDPhidget();
 		rfid.addAttachListener(new AttachListener() {
 			public void attached(AttachEvent e) {
 				try {
@@ -49,7 +51,6 @@ public class Reader
 				System.out.println("Attachment: " + e);
 			}
 		});
-		
 		rfid.addDetachListener(new DetachListener() {
 			public void detached(DetachEvent e) {
 				System.out.println("Detachment: " + e);
@@ -103,6 +104,14 @@ public class Reader
 		rfid.close();
 		rfid = null;
 		System.out.println(" [OK]");
+		
+		} catch (PhidgetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	private static void postTag(String id, String action) {

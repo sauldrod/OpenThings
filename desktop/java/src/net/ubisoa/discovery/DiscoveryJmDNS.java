@@ -9,7 +9,7 @@ import javax.jmdns.ServiceInfo;
 
 public class DiscoveryJmDNS  {
 
-	public final static String REMOTE_TYPE = "_openthings._tcp.local.";
+		public final static String REMOTE_TYPE = "_openthings._tcp.local.";
 		private static JmDNS mdnsServer;
 	
 		public DiscoveryJmDNS() throws IOException {

@@ -140,11 +140,11 @@ public class BlindResource extends BaseResource{
 				"  xmlns:hr=\"http://iserve.kmi.open.ac.uk/ns/hrests#\">"+
 
 				// Service Description
-				"  <ssn:Observation rdf:about=\""+getRequest().getRootRef().toString() +"\">"+
+				"  <ssn:Observation rdf:about=\""+getRequest().getRootRef().toString() +"/\">"+
 				"    <rdfs:label>Window Blind Position</rdfs:label>"+
-				"    <spt:minValue>"+ minimum +"</spt:minValue>"+
+				"    <spt:minValue>"+ minimum +"(cerrado)</spt:minValue>"+
 				"    <spt:value>"+ current +"</spt:value>"+
-				"    <spt:maxValue>"+ maximum +"</spt:maxValue>"+
+				"    <spt:maxValue>"+ maximum +"(abierto)</spt:maxValue>"+
 
 				"    <rdfs:seeAlso rdf:resource=\""+getRequest().getRootRef().toString() +"/.well-known\"/>"+
 				"  </hr:Observation>"+

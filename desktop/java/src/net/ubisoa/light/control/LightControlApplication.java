@@ -6,8 +6,6 @@ import java.net.InetAddress;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import net.ubisoa.discovery.DiscoveryJmDNS;
-
 public class LightControlApplication{
 
     /**
