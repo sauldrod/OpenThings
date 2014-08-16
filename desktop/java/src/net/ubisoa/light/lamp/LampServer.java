@@ -49,7 +49,12 @@ public class LampServer extends Application {
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		
-		DiscoveryBonjour.registerService("Lamp", "/lamp", 80);		
+		try {
+			DiscoveryJmDNS.registerService("Lamp", "/lamp", 80);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		return router;
 	}
 	

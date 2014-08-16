@@ -23,9 +23,10 @@ public class DiscoveryJmDNS  {
 	        txtRecord.put("path", path);
 	
 	        
-			// Register a test service.
-			ServiceInfo testService = ServiceInfo.create(REMOTE_TYPE, name, 80,  0, 0, txtRecord);
-			mdnsServer.registerService(testService);
+			// Register the service.
+			mdnsServer = JmDNS.create();
+			ServiceInfo service = ServiceInfo.create(REMOTE_TYPE, name, port,  0, 0, txtRecord);
+			mdnsServer.registerService(service);
 			System.out.println("Service "+ name +" is registered.");
 		}
 

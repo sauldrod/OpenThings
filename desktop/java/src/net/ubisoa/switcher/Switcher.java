@@ -26,18 +26,16 @@ public class Switcher {
 		server.getContext().getParameters().set("maxTotalConnections", Defaults.MAX_CONNECTIONS);
 		server.getContext().getParameters().set("maxThreads", Defaults.MAX_THREADS);
 		
-		//Set dnssd server
-		DiscoveryJmDNS DNSServer = new DiscoveryJmDNS();
 		
 		//Virtual services selection
 		component.getDefaultHost().attach("", new HubServer());
-//		component.getDefaultHost().attach("/context", new ContextServer());
+		component.getDefaultHost().attach("/context", new ContextServer());
 		
 		//Device services selection
-//		component.getDefaultHost().attach("/rfid", new RFIDServer());
-//		component.getDefaultHost().attach("/control", new LightControlServer());
+		component.getDefaultHost().attach("/control", new LightControlServer());
 		component.getDefaultHost().attach("/blind", new BlindServer());
-//		component.getDefaultHost().attach("/lamp", new LampServer());
+		component.getDefaultHost().attach("/lamp", new LampServer());
+		component.getDefaultHost().attach("/rfid", new RFIDServer());
 
 		//Start the server
 		component.start();

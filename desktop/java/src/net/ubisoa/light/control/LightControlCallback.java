@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.Date;
 
 import net.ubisoa.common.BaseResource;
 import net.ubisoa.light.push.PushInfo;
@@ -28,6 +28,11 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+
+import ch.ethz.inf.vs.californium.coap.Request;
+import ch.ethz.inf.vs.californium.coap.Response;
+
+
 
 public class LightControlCallback extends BaseResource {
 	// TODO: Add documentation.
@@ -60,10 +65,54 @@ public class LightControlCallback extends BaseResource {
 
 		String position = "0";
 		String lamp = "off";
+		int photo = 0;
+		int solar = 0;
 		
 		System.out.println("Se recibio un ping");
 		System.out.println(getQuery().toString());
 		
+		//Get Light
+		URI uri = null; // URI parameter of the request
+		
+			// input URI from command line arguments
+			try {
+				uri = new URI("coap://192.168.0.15:5683/sensors/light");
+			} catch (URISyntaxException e) {
+				System.err.println("Invalid URI: " + e.getMessage());
+				System.exit(-1);
+			}
+		
+			// create new request
+			Request request = Request.newGet();
+			// specify URI of target endpoint
+			request.setURI(uri);
+			
+			request.send();
+			
+			// receive response
+			try {
+				Response response = request.waitForResponse(1000);
+				
+				if (response != null) {
+					// response received, output a pretty-print
+
+					// parse response
+					String parse = response.getPayloadString();
+					String parse2 = response.getPayloadString();
+					parse.replaceFirst(";{1}[0-9]+", "");
+					photo = Integer.parseInt(parse.replaceFirst(";{1}[0-9]+", "")); 
+					solar = Integer.parseInt(parse2.replaceFirst("[0-9]+;{1}", ""));
+					System.out.println("Response: " + photo + solar);
+				} else {
+					System.out.println("No response received.");
+				}
+				
+			} catch (InterruptedException e) {
+				System.err.println("Receiving of response interrupted: " + e.getMessage());
+				System.exit(-1);
+			}
+		
+		//Get Tag
 		try {
 			HttpGet get = new HttpGet("http://127.0.0.1/rfid/data?output=json");
 			HttpResponse response = client.execute(get);
@@ -85,10 +134,14 @@ public class LightControlCallback extends BaseResource {
 			if (new String("010b0a1fa7").equals(item)){
 				position = "0";
 				lamp = "on";
-			} else if (new String("010b0a1848").equals(item)){
-				position = "180";
+			} else if (new String("010b0a1848").equals(item) && solar>300){
+				position = "90";
 				lamp = "off";
+			} else if (new String("010b0a1848").equals(item) && solar<300){
+				position = "0";
+				lamp = "on";
 			}
+				
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
@@ -97,8 +150,6 @@ public class LightControlCallback extends BaseResource {
 			e.printStackTrace();
 		}
 		
-		
-
 		//Set Lamp
 			try {
 				String enc = "UTF-8";
