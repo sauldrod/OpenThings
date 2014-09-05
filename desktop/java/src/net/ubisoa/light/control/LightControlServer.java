@@ -55,12 +55,7 @@ public class LightControlServer extends Application implements PushApplication {
 	@Override
 	public Restlet createInboundRoot() {
 		
-		try {
-			DiscoveryJmDNS.registerService("LightControl", "/control", 80);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		DiscoveryJmDNS.registerService("LightControl", "/control/", 80);		
 		
 		Router router = new BaseRouter(getContext());
 		router.attach("/", LightControlResource.class);

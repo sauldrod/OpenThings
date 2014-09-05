@@ -32,6 +32,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import net.ubisoa.common.BaseRouter;
 import net.ubisoa.core.Defaults;
+import net.ubisoa.discovery.DiscoveryBonjour;
+import net.ubisoa.discovery.DiscoveryJmDNS;
 
 import org.apache.http.client.HttpClient;
 import org.restlet.Application;
@@ -56,6 +58,9 @@ public class HubServer extends Application {
 	public Restlet createInboundRoot() {
 		handler = new HubHandler(this);
 		handler.start();
+		
+		//Start Discovery
+		DiscoveryJmDNS.registerService("Hub", "/", 80);	
 		
 		Router router = new BaseRouter(getContext());
 		router.attach("/", HubResource.class);

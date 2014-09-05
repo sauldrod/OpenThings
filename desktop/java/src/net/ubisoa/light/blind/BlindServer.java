@@ -44,9 +44,9 @@ public class BlindServer extends Application {
 	public Restlet createInboundRoot() {
 		
 		//Start interface
-		if (!connectPhidget()) {
-			System.out.println("Cannot start Phidget.");
-		}
+//		if (!connectPhidget()) {
+//			System.out.println("Cannot start Phidget.");
+//		}
 		
 		//Set resource routes
 		Router router = new BaseRouter(getContext());
@@ -58,12 +58,7 @@ public class BlindServer extends Application {
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		
-		try {
-			DiscoveryJmDNS.registerService("Blind", "/blind", 80);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		DiscoveryBonjour.registerService("Blind", "/blind/", 80);	
 		return router;
 	}
 	

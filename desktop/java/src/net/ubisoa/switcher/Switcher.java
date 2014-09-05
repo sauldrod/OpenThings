@@ -5,9 +5,7 @@ import net.ubisoa.discovery.DiscoveryJmDNS;
 import net.ubisoa.light.blind.BlindServer;
 import net.ubisoa.light.context.ContextServer;
 import net.ubisoa.light.control.LightControlServer;
-import net.ubisoa.light.lamp.LampServer;
 import net.ubisoa.light.push.HubServer;
-import net.ubisoa.light.rfid.RFIDServer;
 
 import org.restlet.Component;
 import org.restlet.Server;
@@ -26,6 +24,8 @@ public class Switcher {
 		server.getContext().getParameters().set("maxTotalConnections", Defaults.MAX_CONNECTIONS);
 		server.getContext().getParameters().set("maxThreads", Defaults.MAX_THREADS);
 		
+		//Start DNS Server
+		new DiscoveryJmDNS();
 		
 		//Virtual services selection
 		component.getDefaultHost().attach("", new HubServer());
@@ -34,8 +34,8 @@ public class Switcher {
 		//Device services selection
 		component.getDefaultHost().attach("/control", new LightControlServer());
 		component.getDefaultHost().attach("/blind", new BlindServer());
-		component.getDefaultHost().attach("/lamp", new LampServer());
-		component.getDefaultHost().attach("/rfid", new RFIDServer());
+//		component.getDefaultHost().attach("/lamp", new LampServer());
+//		component.getDefaultHost().attach("/rfid", new RFIDServer());
 
 		//Start the server
 		component.start();

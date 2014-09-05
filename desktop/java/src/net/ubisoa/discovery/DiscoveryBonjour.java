@@ -66,11 +66,11 @@ public class DiscoveryBonjour {
 
 				public void serviceRegistered(DNSSDRegistration registration, int flags,
 						String serviceName, String regType, String domain) {
-					System.out.println("Service is registered.");
+					System.out.println("Discovery: Service "+ serviceName +" is registered.");
 				}
 
 				public void operationFailed(DNSSDService service, int errorCode) {
-					System.err.println("Registration failed " + errorCode);
+					System.err.println("Discovery: Service " + service + " failed " + errorCode);
 				}});
 		} catch (DNSSDException e) {
 			e.printStackTrace();

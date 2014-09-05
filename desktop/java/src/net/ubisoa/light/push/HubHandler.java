@@ -46,14 +46,14 @@ public class HubHandler extends Thread {
 			try {
 				synchronized (this) {
 					// Looking for subscriptions to verify.
-					hubApp.getLogger().info("Looking for subscriptions to verify…");
+					hubApp.getLogger().info("Hub: Looking for subscriptions to verify…");
 					for (Subscription sub : hubApp.getSubscriptions())
 						if (!sub.getVerified())
 							new HubSubVerifier(
 								hubApp.getDefaultClient(), sub, hubApp.getLogger()).start();
 					
 					// Looking for notifications to send.
-					hubApp.getLogger().info("Looking for notifications to send…");
+					hubApp.getLogger().info("Hub: Looking for notifications to send…");
 					while (hubApp.getNotificationsQueue().peek() != null) {
 						Topic topic = hubApp.getNotificationsQueue().poll();
 						
@@ -75,7 +75,7 @@ public class HubHandler extends Thread {
 					}
 				
 					// Waiting until a thread notification arrives.
-					hubApp.getLogger().info("Waiting…");
+					hubApp.getLogger().info("Hub: Waiting…");
 					wait();
 				}
 			} catch (InterruptedException e) {

@@ -29,12 +29,7 @@ public class ContextServer extends Application {
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		
-		try {
-			DiscoveryJmDNS.registerService("Context", "/context", 80);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		DiscoveryJmDNS.registerService("Context", "/context/", 80);		
 		return router;
 	}
 
