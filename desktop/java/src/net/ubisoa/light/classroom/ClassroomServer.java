@@ -1,4 +1,4 @@
-package net.ubisoa.light.context;
+package net.ubisoa.light.classroom;
 
 import java.io.IOException;
 
@@ -13,23 +13,28 @@ import org.restlet.Restlet;
 import org.restlet.routing.Redirector;
 import org.restlet.routing.Router;
 
-public class ContextServer extends Application {
+public class ClassroomServer extends Application {
 	private HttpClient client = Defaults.getHttpClient();
 	
 	@Override
 	public Restlet createInboundRoot() {
 		
+		
+		
 		//Set resource routes
 		Router router = new BaseRouter(getContext());
-		router.attach(Defaults.WELL_KNOWN, ContextDescription.class);
-		router.attach("/data", ContextResource.class);
+		router.attach(Defaults.WELL_KNOWN, ClassroomDescription.class);
+		router.attach("/context", ClassroomContext.class);
+		router.attach("/registry", ClassroomRegistry.class);
+		router.attach("/status", ClassroomStatus.class);
 		
 		//Set cool redirect
-		String target = "/context/data";
+		String target = "/classroom/.well-known";
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
-		router.attach("/", redirector);
+		router.attach("", redirector);
 		
-		DiscoveryJmDNS.registerService("Context", "/context/", 80);		
+		//Chose between DiscoveryJmDNS and DiscoveryBonjour
+		DiscoveryJmDNS.registerService("Classroom", "/classroom", 80);		
 		return router;
 	}
 

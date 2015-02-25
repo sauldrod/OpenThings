@@ -1,4 +1,4 @@
-package net.ubisoa.light.context;
+package net.ubisoa.light.classroom;
 
 import net.ubisoa.common.BaseResource;
 
@@ -8,7 +8,7 @@ import org.restlet.resource.Get;
 
 import com.phidgets.PhidgetException;
 
-public class ContextDescription  extends BaseResource{
+public class ClassroomDescription  extends BaseResource{
 	@Get("rdf")
 	public StringRepresentation servoRDF() throws PhidgetException {
 		
@@ -21,8 +21,8 @@ public class ContextDescription  extends BaseResource{
 "  xmlns:hr=\"http://iserve.kmi.open.ac.uk/ns/hrests#\">"+
 
 // Service Description
-"  <hr:Service rdf:about=\""+getRequest().getResourceRef().toString() +"\">"+
-"    <rdf:type rdf:resource=\"http://purl.oclc.org/NET/ssnx/ssn#Device\"/>"+
+"  <hr:Service rdf:about=\""+getRequest().getRootRef().toString() +"/\">"+
+"    <rdf:type rdf:resource=\"https://dl.dropboxusercontent.com/u/10408575/openthings.owl#VirtualEnviroment\"/>"+
 "    <rdfs:label>Window Blind Description</rdfs:label>"+
 "    <spt:actuate rdf:resource=\"http://dbpedia.org/resource/Window_blind\"/>"+
 "    <ssn:featureOfInterest rdf:resource=\"http://spitfire-project.eu/ontology/ns/Light\"/>"+

@@ -25,14 +25,14 @@ public class BlindServer extends Application {
 	private static boolean connectPhidget() {
 		try {
 			phidget = new AdvancedServoPhidget();
-			phidget.open(177475);
+//			phidget.open(177475);
 			System.out.println("waiting for Servo attachment...");
-			phidget.waitForAttachment();
-			System.out.println("Serial: " + phidget.getSerialNumber());
-			System.out.println("Servos: " + phidget.getMotorCount());			
-			phidget.setEngaged(0, true);
-		    phidget.setServoType(0,AdvancedServoPhidget.PHIDGET_SERVO_HITEC_HS422);
-			phidget.setPosition(0, 0);
+//			phidget.waitForAttachment();
+//			System.out.println("Serial: " + phidget.getSerialNumber());
+//			System.out.println("Servos: " + phidget.getMotorCount());			
+//			phidget.setEngaged(0, true);
+//		    phidget.setServoType(0,AdvancedServoPhidget.PHIDGET_SERVO_HITEC_HS422);
+//			phidget.setPosition(0, 0);
 			return true;
 		} catch (PhidgetException e) {
 			e.printStackTrace();
@@ -54,7 +54,7 @@ public class BlindServer extends Application {
 		router.attach("/data", BlindResource.class);
 		
 		//Set cool redirect
-		String target = "/blind/data";
+		String target = "/blind/.well-known";
 		Redirector redirector = new Redirector(getContext(), target, Redirector.MODE_CLIENT_SEE_OTHER);
 		router.attach("/", redirector);
 		

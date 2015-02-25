@@ -1,4 +1,4 @@
-package net.ubisoa.light.context;
+package net.ubisoa.light.classroom;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -37,8 +37,9 @@ import com.phidgets.PhidgetException;
 import net.ubisoa.common.BaseResource;
 import net.ubisoa.common.HTMLTemplate;
 
-public class ContextResource extends BaseResource{
+public class ClassroomContext extends BaseResource{
 	
+	//Web representation
 	@Get("html")
 	public StringRepresentation servoMotor() throws PhidgetException {
 		
@@ -51,7 +52,7 @@ public class ContextResource extends BaseResource{
 		return new StringRepresentation(template.getHTML(), MediaType.TEXT_HTML);
 	}
 	
-
+	//Semantic representation
 	@Get("rdf")
 	public StringRepresentation servoRDF() throws PhidgetException {
 

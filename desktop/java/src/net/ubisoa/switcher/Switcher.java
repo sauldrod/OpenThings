@@ -3,7 +3,7 @@ package net.ubisoa.switcher;
 import net.ubisoa.core.Defaults;
 import net.ubisoa.discovery.DiscoveryJmDNS;
 import net.ubisoa.light.blind.BlindServer;
-import net.ubisoa.light.context.ContextServer;
+import net.ubisoa.light.classroom.ClassroomServer;
 import net.ubisoa.light.control.LightControlServer;
 import net.ubisoa.light.push.HubServer;
 
@@ -27,13 +27,11 @@ public class Switcher {
 		//Start DNS Server
 		new DiscoveryJmDNS();
 		
-		//Virtual services selection
+		//Virtual services selection and address definition - Uncomment for enable services.
 		component.getDefaultHost().attach("", new HubServer());
-		component.getDefaultHost().attach("/context", new ContextServer());
-		
-		//Device services selection
-		component.getDefaultHost().attach("/control", new LightControlServer());
-		component.getDefaultHost().attach("/blind", new BlindServer());
+		component.getDefaultHost().attach("/classroom", new ClassroomServer());
+//		component.getDefaultHost().attach("/control", new LightControlServer());
+//		component.getDefaultHost().attach("/blind", new BlindServer());
 //		component.getDefaultHost().attach("/lamp", new LampServer());
 //		component.getDefaultHost().attach("/rfid", new RFIDServer());
 
