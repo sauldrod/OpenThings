@@ -37,7 +37,7 @@ import com.phidgets.PhidgetException;
 import net.ubisoa.common.BaseResource;
 import net.ubisoa.common.HTMLTemplate;
 
-public class ClassroomStatus extends BaseResource{
+public class ClassroomResource extends BaseResource{
 	
 	//Web representation
 	@Get("html")

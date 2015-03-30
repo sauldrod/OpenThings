@@ -25,8 +25,8 @@ public class ClassroomServer extends Application {
 		Router router = new BaseRouter(getContext());
 		router.attach(Defaults.WELL_KNOWN, ClassroomDescription.class);
 		router.attach("/context", ClassroomContext.class);
-		router.attach("/registry", ClassroomRegistry.class);
-		router.attach("/status", ClassroomStatus.class);
+		router.attach("/registry", ClassroomResource.class);
+		router.attach("/status", ClassroomRegistry.class);
 		
 		//Set cool redirect
 		String target = "/classroom/.well-known";
